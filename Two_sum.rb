@@ -21,4 +21,5 @@ def two_sum(nums, target)
     arr
 end
 
+
 p two_sum([3,2,4],6)
