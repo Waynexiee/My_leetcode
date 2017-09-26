@@ -1,9 +1,12 @@
-def title_to_number(s)
-  result = 0
-  size = s.size - 1
-  size.downto(0) do |i|
-    result += (s[i].ord - 64) * (26 ** (size - i))
-  end
-  result
+def is_palindrome(s)
+  s.gsub!(/\W+/, '')
+  return true if s.empty? || s.nil?
+  puts s
+  return true if s.downcase.reverse == s.downcase
+  return false
 end
-puts title_to_number("BA")
+
+s = "A man, a plan, a canal: Panama"
+puts is_palindrome(s)
+s = "A man, a plan, a canal -- Panama"
+puts is_palindrome(s)
