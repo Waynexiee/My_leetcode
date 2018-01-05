@@ -6,28 +6,32 @@ class TreeNode
   end
 end
 
-def level_order(root)
-  queue = []
-  ret = []
-  queue.push(root) if !root.nil?
-  while !queue.empty?
-    temp = []
-    level = []
-    while !queue.empty?
-      node = queue.shift
-      level.push(node.val)
-      temp.push(node.left) unless node.left.nil?
-      temp.push(node.right) unless node.right.nil?
-    end
-    ret.push(level)
-    queue = temp
+def is_valid_bst(root)
+  nums = []
+  traverse(root, nums)
+  size = nums.size - 1
+  size.times do |i|
+    return false if nums[i] > nums[i+1]
   end
-  ret
+  true 
 end
 
-root =  TreeNode.new(3)
-root.left = TreeNode.new(9)
-root.right = TreeNode.new(20)
-root.right.left = TreeNode.new(15)
-root.right.right = TreeNode.new(7)
-p level_order(root)
+def traverse(root, nums)
+  return if root.nil?
+  traverse(root.left, nums)
+  nums << root.val
+  traverse(root.right, nums)
+end
+
+root =  TreeNode.new(2)
+root.left = TreeNode.new(3)
+root.right = TreeNode.new(3)
+root.left.left = TreeNode.new(4)
+root.left.right = TreeNode.new(5)
+root.right.right = TreeNode.new(5)
+root.right.right = TreeNode.new(4)
+root.left.right.left = TreeNode.new(8)
+root.left.right.right = TreeNode.new(9)
+root.right.right.left = TreeNode.new(9)
+root.right.right.left = TreeNode.new(8)
+p is_valid_bst(root)
