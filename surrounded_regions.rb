@@ -18,7 +18,6 @@ def solve(board)
           if i+1 < row && !visited[i+1][j] && board[i+1][j] == "O"
             unless DFS(i+1,j,visited,board,row,column,queue)
               mark[0] = true
-
             else
               stack.push([i+1,j])
             end
