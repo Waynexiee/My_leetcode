@@ -20,6 +20,7 @@ def unique_paths_with_obstacles(obstacle_grid)
       end
     end
   end
+  p ret
   ret[time-1][size-1]
 end
 
