@@ -1,18 +1,21 @@
-def subsets_with_dup(nums)
+def combine(n, k)
   ret = []
   temp = []
 
-  nums.sort!
-  helper(nums, nums.size, temp, ret)
+  nums = (1..n).to_a
+  helper(nums, k, temp, ret)
   ret
 end
 
 def helper(nums, size, temp, ret)
-  return if size < 0
-  ret.push(temp)
+  if size == 0
+    ret.push(temp)
+    return
+  end
+
+
   nums.each_with_index do |e, i|
-    next if i > 0 && e == nums[i-1]
-    next if !temp.empty? && temp[-1] > e
+    next if !temp.empty? && temp[-1] > e 
     temp.push(e)
     nums_copy = nums.dup
     nums_copy.delete_at(i)
@@ -21,5 +24,4 @@ def helper(nums, size, temp, ret)
   end
 end
 
-nums = [4,4,4,1,4]
-p subsets_with_dup(nums)
+p combine(4,2)

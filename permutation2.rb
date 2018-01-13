@@ -1,18 +1,20 @@
-def subsets_with_dup(nums)
+def permute_unique(nums)
   ret = []
   temp = []
-
   nums.sort!
   helper(nums, nums.size, temp, ret)
   ret
 end
 
 def helper(nums, size, temp, ret)
-  return if size < 0
-  ret.push(temp)
+  if size == 0
+    ret.push(temp)
+    return
+  end
+  p nums
+
   nums.each_with_index do |e, i|
     next if i > 0 && e == nums[i-1]
-    next if !temp.empty? && temp[-1] > e
     temp.push(e)
     nums_copy = nums.dup
     nums_copy.delete_at(i)
@@ -21,5 +23,5 @@ def helper(nums, size, temp, ret)
   end
 end
 
-nums = [4,4,4,1,4]
-p subsets_with_dup(nums)
+nums = [1,1,2]
+p permute_unique(nums)
