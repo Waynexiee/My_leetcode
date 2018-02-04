@@ -1,12 +1,23 @@
-def find_poisoned_duration(time_series, duration)
-  return 0 if time_series.empty?
-  ret = 0
-  size = time_series.size - 1
-  (0..size-1).each do |i|
-    ret += [time_series[i + 1] - time_series[i],duration].min
+def kth_grammar(n, k)
+  count = 0
+  arr = [0,1,1,0,1,0,0,1]
+
+
+  while k > 8
+    max = 1
+    while max * 2 < k
+      max *= 2
+    end
+    count += 1
+    k = k - max
   end
-  ret += duration
+
+  if count % 2 == 0
+    return arr[k - 1]
+  else
+    return 1 - arr[k - 1]
+  end
+
 end
-time_series = [1,2]
-duration = 2
-puts find_poisoned_duration(time_series, duration)
+
+puts kth_grammar(30, 434991989)
