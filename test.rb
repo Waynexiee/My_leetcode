@@ -1,51 +1,38 @@
-class NumMatrix
-
-=begin
-  :type matrix: Integer[][]
-=end
-  def initialize(matrix)
-    row = matrix.size
-    col = matrix[0].size
-    @col = col
-    @matrix = []
-    (0..row-1).each do |i|
-      (0..col-1).each do |j|
-        @matrix[i * col + j] = matrix[i][j]
-        @matrix[i * col + j] += @matrix[(i - 1) * col + j] if i - 1 >= 0
-        @matrix[i * col + j] += @matrix[i * col + j - 1] if j - 1 >= 0
-        @matrix[i * col + j] -= @matrix[(i - 1) * col + j - 1] if j - 1 >= 0 && i - 1 >= 0
+def number_of_arithmetic_slices(a)
+  size = a.size
+  return 0 if size < 3
+  count = {}
+  mem = a[1] - a[0]
+  sum = 1
+  (2..size-1).each do |i|
+    if a[i] - a[i - 1] == mem
+      sum += 1
+    else
+      if count[sum]
+        count[sum] += 1
+      else
+        count[sum] = 1
       end
+      mem = a[i] - a[i - 1]
+      sum = 1
+    end
+  end
+  if sum >= 2
+    if count[sum]
+      count[sum] += 1
+    else
+      count[sum] = 1
     end
   end
 
-
-=begin
-  :type row1: Integer
-  :type col1: Integer
-  :type row2: Integer
-  :type col2: Integer
-  :rtype: Integer
-=end
-  def sum_region(row1, col1, row2, col2)
-    ret = 0
-    ret = @matrix[row2 * @col + col2] 
-    ret -= @matrix[(row1 - 1) * @col + col2] if row1 - 1 >= 0
-    ret -= @matrix[row2 * @col + col1 - 1] if col1 - 1 >= 0
-    ret += @matrix[(row1 - 1) * @col + col1 - 1] if row1 - 1 >= 0 && col1 - 1 >= 0
+  ret = 0
+  count.each do |k, v|
+    if k >= 2
+      ret += (k - 1) * k * v / 2
+    end
   end
-
-
+  ret
 end
 
-# Your NumMatrix object will be instantiated and called as such:
-matrix = [
-  [3, 0, 1, 4, 2],
-  [5, 6, 3, 2, 1],
-  [1, 2, 0, 1, 5],
-  [4, 1, 0, 1, 7],
-  [1, 0, 3, 0, 5]
-]
-obj = NumMatrix.new(matrix)
-p obj.sum_region(2, 1, 4, 3)
-p obj.sum_region(1, 1, 2, 2)
-p obj.sum_region(1, 2, 2, 4)
+a = [1,2,3,4,2,3,4,5,6]
+puts number_of_arithmetic_slices(a)
